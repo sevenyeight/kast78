@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kastmaster 101</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8922A;
+    --gold-light: #E8B84B;
+    --silver: #A8B8C8;
+    --water: #0D1F2D;
+    --deep: #071318;
+    --surface: #0F2233;
+    --ink: #E8EAE6;
+    --muted: #6B8090;
+    --accent: #2EC4B6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .hero {
+    position: relative;
+    padding: 60px 24px 48px;
+    background: var(--water);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(200,146,42,0.2);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px; right: -60px; bottom: -20px;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(200,146,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 30%, rgba(46,196,182,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .lure-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.1s;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 20vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    animation: fadeUp 0.6s ease forwards 0.2s;
+    opacity: 0;
+  }
+
+  .hero h1 span {
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.08em;
+    animation: fadeUp 0.6s ease forwards 0.35s;
+    opacity: 0;
+  }
+
+  .lure-svg {
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    opacity: 0.12;
+    animation: fadeIn 1s ease forwards 0.5s;
+    opacity: 0;
+  }
+
+  /* SECTIONS */
+  .page { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .section {
+    margin-top: 36px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.4s; }
+  .section:nth-child(2) { animation-delay: 0.5s; }
+  .section:nth-child(3) { animation-delay: 0.6s; }
+  .section:nth-child(4) { animation-delay: 0.7s; }
+  .section:nth-child(5) { animation-delay: 0.8s; }
+  .section:nth-child(6) { animation-delay: 0.9s; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,146,42,0.2);
+  }
+
+  /* WHAT IT IS */
+  .desc-card {
+    background: var(--surface);
+    border: 1px solid rgba(168,184,200,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 14px;
+    color: rgba(232,234,230,0.8);
+    line-height: 1.7;
+  }
+
+  /* RETRIEVE TYPES */
+  .retrieve-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .retrieve-item {
+    background: var(--surface);
+    border: 1px solid rgba(168,184,200,0.1);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .retrieve-item:hover { border-color: rgba(200,146,42,0.3); }
+
+  .retrieve-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .retrieve-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .retrieve-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* SIZE CHART */
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .size-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(168,184,200,0.1);
+  }
+
+  .size-table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(168,184,200,0.06);
+    color: rgba(232,234,230,0.85);
+    vertical-align: top;
+  }
+
+  .size-table tr:last-child td { border-bottom: none; }
+
+  .size-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .badge {
+    display: inline-block;
+    background: rgba(200,146,42,0.15);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .color-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid rgba(168,184,200,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+  }
+
+  .color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .swatch-gold {
+    background: linear-gradient(135deg, #C8922A 0%, #E8B84B 50%, #A0700F 100%);
+  }
+  .swatch-silver {
+    background: linear-gradient(135deg, #8899AA 0%, #D0DDE8 50%, #909EAC 100%);
+  }
+  .swatch-chrome {
+    background: linear-gradient(135deg, #6699BB 0%, #99CCEE 40%, #334466 100%);
+  }
+
+  .color-info { flex: 1; }
+  .color-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .color-when {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* TIPS */
+  .tips-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid rgba(46,196,182,0.1);
+    font-size: 13px;
+    color: rgba(232,234,230,0.8);
+    line-height: 1.5;
+  }
+
+  .tip-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-weight: 500;
+  }
+
+  /* SPOTS */
+  .spots-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .spot-chip {
+    background: rgba(200,146,42,0.1);
+    border: 1px solid rgba(200,146,42,0.25);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.12; }
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    border-top: 1px solid rgba(168,184,200,0.07);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="lure-label">Metal Spoon · Cast &amp; Retrieve</div>
+  <h1>KAST<span>MASTER</span><br>101</h1>
+  <div class="hero-sub">Acme Tackle · Freshwater · SoCal Guide</div>
+
+  <!-- decorative lure SVG -->
+  <svg class="lure-svg" width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0;animation:fadeIn 1s ease forwards 0.5s;">
+    <ellipse cx="110" cy="110" rx="80" ry="30" stroke="#C8922A" stroke-width="1.5" transform="rotate(-35 110 110)"/>
+    <ellipse cx="110" cy="110" rx="60" ry="20" stroke="#C8922A" stroke-width="1" transform="rotate(-35 110 110)" opacity="0.5"/>
+    <circle cx="85" cy="78" r="8" stroke="#C8922A" stroke-width="1.5"/>
+    <line x1="93" y1="78" x2="100" y2="74" stroke="#C8922A" stroke-width="1.5"/>
+    <path d="M138 144 L148 156 L140 162 L130 150 Z" stroke="#C8922A" stroke-width="1.5"/>
+  </svg>
+</div>
+
+<div class="page">
+
+  <!-- WHAT IT IS -->
+  <div class="section">
+    <div class="section-label">What It Is</div>
+    <div class="desc-card">
+      A heavy, solid metal spoon with a slanted body cut. That angle is everything — it gives the lure a natural wobble and flutter as it moves through the water, mimicking a wounded baitfish. Sinks fast, casts far, and works at any depth.
+    </div>
+  </div>
+
+  <!-- HOW TO FISH IT -->
+  <div class="section">
+    <div class="section-label">How to Fish It</div>
+    <div class="retrieve-list">
+      <div class="retrieve-item">
+        <div class="retrieve-icon">🎯</div>
+        <div>
+          <div class="retrieve-title">Steady Retrieve</div>
+          <div class="retrieve-desc">Cast out, let it sink 3–5 seconds, then reel at a medium pace. The lure handles the action — just keep it moving.</div>
+        </div>
+      </div>
+      <div class="retrieve-item">
+        <div class="retrieve-icon">⚡</div>
+        <div>
+          <div class="retrieve-title">Vary Your Speed</div>
+          <div class="retrieve-desc">Speed up suddenly, then slow down. Fish often strike right when you pause — they think the bait is trying to escape.</div>
+        </div>
+      </div>
+      <div class="retrieve-item">
+        <div class="retrieve-icon">🌊</div>
+        <div>
+          <div class="retrieve-title">Let It Flutter Down</div>
+          <div class="retrieve-desc">After casting, count to 5 before reeling. The falling wobble triggers strikes — count deeper if fish aren't hitting near the surface.</div>
+        </div>
+      </div>
+      <div class="retrieve-item">
+        <div class="retrieve-icon">🎣</div>
+        <div>
+          <div class="retrieve-title">Rod Twitches</div>
+          <div class="retrieve-desc">Flick the rod tip while reeling to add irregular darting movement. Deadly for bass and trout that want a reaction bite.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE CHART -->
+  <div class="section">
+    <div class="section-label">Size Guide</div>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Weight</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="font-family:'DM Mono',monospace;">1/12 – 1/8 oz</span></td>
+          <td>Small ponds, stocked trout, panfish</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'DM Mono',monospace;">1/4 oz</span> <span class="badge">START HERE</span></td>
+          <td>Lakes &amp; reservoirs — all-purpose pick</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'DM Mono',monospace;">3/8 – 1/2 oz</span></td>
+          <td>Deeper water, bigger bass, striper</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COLORS -->
+  <div class="section">
+    <div class="section-label">Colors</div>
+    <div class="color-grid">
+      <div class="color-row">
+        <div class="color-swatch swatch-gold"></div>
+        <div class="color-info">
+          <div class="color-name">Gold</div>
+          <div class="color-when">Sunny days · Clear water</div>
+        </div>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch swatch-silver"></div>
+        <div class="color-info">
+          <div class="color-name">Silver</div>
+          <div class="color-when">Overcast · Slightly murky water</div>
+        </div>
+      </div>
+      <div class="color-row">
+        <div class="color-swatch swatch-chrome"></div>
+        <div class="color-info">
+          <div class="color-name">Chrome / Blue</div>
+          <div class="color-when">Early morning · Evening · Low light</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section">
+    <div class="section-label">Pro Tips</div>
+    <div class="tips-list">
+      <div class="tip">
+        <span class="tip-num">01</span>
+        Use a snap swivel between the line and lure — the spinning action will twist your line over time without one.
+      </div>
+      <div class="tip">
+        <span class="tip-num">02</span>
+        Don't set the hook hard. The treble is sharp and fish usually self-hook — a firm lift is enough.
+      </div>
+      <div class="tip">
+        <span class="tip-num">03</span>
+        If you're getting follows but no bites, slow way down or speed way up — the fish want a different trigger.
+      </div>
+      <div class="tip">
+        <span class="tip-num">04</span>
+        Fish it near structure — rocky points, drop-offs, submerged trees. The lure will bounce off and flutter down, which is deadly.
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCAL SPOTS -->
+  <div class="section">
+    <div class="section-label">SoCal Spots That Eat Kastmasters</div>
+    <div class="spots-row">
+      <div class="spot-chip">Irvine Lake</div>
+      <div class="spot-chip">Lake Piru</div>
+      <div class="spot-chip">Castaic Lake</div>
+      <div class="spot-chip">Santa Fe Dam</div>
+      <div class="spot-chip">Puddingstone</div>
+      <div class="spot-chip">Pyramid Lake</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">78 FSH · KASTMASTER FIELD GUIDE</div>
+
+</body>
+</html>
